@@ -1,0 +1,25 @@
+<%group = Group.find_by(id: params[:id])%>
+<div style="background-color:#435055;height:100vh;display:flex;flex-direction:column;align-items:center;">
+    <div style="padding:3px;">
+    <%=link_to " <- Back to groups", groups_path, class: "btn btn-secondary"%>
+    <button onclick="location.reload()" class="btn btn-primary">Start Chatting Click here</button>
+    </div>
+    <div style="display:flex;">
+        <div style="background-color:black;width:55rem;height:45rem;display:grid;grid-template-rows:1fr 10fr 1fr;color:white;border-radius: 50px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);margin-right:20px;">
+            <div style="display:flex;align-items:center;justify-content:space-around;background-color:#2C3333;border-radius:50px 50px 0px 0px;">
+                <div><h2><%=group.group_name%></h2></div>
+            </div>
+            <div style="display:flex;overflow-y:auto;">
+            <%=turbo_stream_from group%>
+                <div id="messages">
+                    <%= render @messages%>
+                </div>
+            </div>
+            <div style="background-color:white;padding:10px 40px;margin-top:4px;display:block;border-radius:0px 0px 50px 50px">
+                <%= form_with url: messages_path, method: :post, class: "d-flex", role: "search", style: "padding:10px;"%>
+                <%= text_field_tag :body,nil ,placeholder: "Message...", class: "form-control me-2"%>
+                <%= submit_tag "Send", class: "btn btn-success" %>
+            </div>
+        </div>
+    </div>
+</div>

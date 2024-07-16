@@ -1,0 +1,19 @@
+<%group = Group.find_by(group_name: group_user_info.group_name)%>
+<%show_add = (group_user_info.user_id.to_i == group_user_info.group_owner.to_i)%>
+<div style="padding:4px;">
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:space-between;width: 30rem;height:auto;background-color:#1B1A55;border-radius:40px;color:white;padding:5px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);">
+        <div><%= group.group_name%></div>
+        <div style="padding:10px;">
+            <%= button_to "Owner: #{User.find_by(id:group.group_owner).email}", "#", class: "btn btn-outline-light btn-submit" %>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-around;width:15rem;padding:10px;">
+            <%if show_add%>
+                <%= button_to "Delete", group_path(group), method: :delete, class: "btn btn-outline-danger btn-submit" %>
+                <%= button_to "Add", add_group_path(group), method: :get, class: "btn btn-outline-warning btn-submit" %>
+            <%else%>
+                <%=button_to "Exit", exit_group_path(group), class: "btn btn-outline-primary btn-submit" %>
+            <%end%>
+            <%= button_to "View", group_path(group), method: :get, class: "btn btn-outline-info btn-submit" %>
+        </div>
+    </div>
+</div>

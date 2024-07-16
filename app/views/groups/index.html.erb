@@ -1,0 +1,15 @@
+<div style="background-color:#435055;height:100vh;display:flex; justify-content:center;">
+    <div style="padding:10px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;border-radius: 50px;overflow-y:auto;">
+        <div style="padding:10px 40px;display:block;">
+            <%= form_with url: groups_path, method: :post, class: "d-flex", role: "search", style: "padding:10px;"%>
+            <%= text_field_tag :group_name,nil ,placeholder: "Add new group", class: "form-control me-2"%>
+            <%= submit_tag "Create", class: "btn btn-success" %>
+        </div>
+        <div style="display:flex;flex-direction:column;overflow-y:auto;">
+            <%= turbo_stream_from current_user%>
+                <div id="groups">
+                    <%= render @groups %>
+                </div>
+        </div>
+    </div>
+</div>

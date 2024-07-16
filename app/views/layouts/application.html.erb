@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Group Chat Room" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <style>
+    <% if current_user%>
+    <%=".message#{current_user.id}"%>{
+      align-items:flex-end !important;
+    }
+    <%=".message#{current_user.id}"%> > * {
+      background-color:#F4A261 !important;
+    }
+    <%end%>
+    </style>
+
+  </head>
+
+  <body>
+    <nav class="navbar bg-body-tertiary" data-bs-theme="dark">
+      <div class="container-fluid">
+        <a class="navbar-brand">Groups</a>
+        <% if current_user%>
+        <%= button_to "Logout #{current_user.email}", destroy_user_session_path, method: :delete, class:"btn btn-danger"%>
+        <%else%>
+        <%= link_to "Login", new_user_session_path , class:"btn btn-outline-primary"%>
+        <%end%>
+      </div>
+    </nav>
+    <%= yield %>
+  </body>
+</html>
